@@ -30,7 +30,7 @@ export default function ManualInput() {
         vibrate(50);
         addToast({ type: 'success', message: `${team?.flag} ${r.teamName} #${r.number}`, detail: '¡Nueva!' });
         setTimeout(() => {
-          if (useAlbumStore.getState().isTeamComplete(r.teamCode)) {
+          if (isTeamComplete(r.teamCode)) {
             playComplete();
             addToast({ type: 'success', message: `🎉 ¡${team?.flag} ${r.teamName} completo!`, duration: 5000 });
           }

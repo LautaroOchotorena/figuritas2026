@@ -1,7 +1,7 @@
-import { useAlbumStore, getStickerNumbers, getStickerCount } from '../../store/albumStore';
+import { useAlbumStore, getStickerNumbers } from '../../store/albumStore';
 import { useUIStore } from '../../store/uiStore';
-import { TEAMS, TEAM_BY_CODE } from '../../data/teams';
-import { STICKERS_PER_TEAM, CONFEDERATION_ORDER, CONFEDERATION_LABELS, CONFEDERATION_COLORS } from '../../utils/constants';
+import { TEAMS } from '../../data/teams';
+import { CONFEDERATION_ORDER, CONFEDERATION_LABELS, CONFEDERATION_COLORS } from '../../utils/constants';
 import { normalizeText } from '../../utils/fuzzyMatch';
 import type { Team } from '../../types';
 import Flag from '../ui/Flag';

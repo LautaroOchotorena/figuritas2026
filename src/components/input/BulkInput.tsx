@@ -3,7 +3,7 @@ import { parseInput } from '../../services/parserService';
 import { useAlbumStore } from '../../store/albumStore';
 import { useUIStore } from '../../store/uiStore';
 import { TEAM_BY_CODE } from '../../data/teams';
-import { playSuccess, playDuplicate, playError } from '../../services/soundService';
+import { playSuccess, playDuplicate } from '../../services/soundService';
 import type { ParseResult } from '../../types';
 
 export default function BulkInput() {

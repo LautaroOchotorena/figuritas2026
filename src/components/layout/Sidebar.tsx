@@ -1,10 +1,9 @@
 import { useUIStore } from '../../store/uiStore';
 import { useAlbumStore, getStickerNumbers } from '../../store/albumStore';
 import { CONFEDERATION_ORDER, CONFEDERATION_LABELS, CONFEDERATION_COLORS, TOTAL_STICKERS, STICKERS_PER_TEAM } from '../../utils/constants';
-import { TEAMS, TEAMS_BY_CONFEDERATION } from '../../data/teams';
+import { TEAMS_BY_CONFEDERATION } from '../../data/teams';
 import type { Confederation } from '../../types';
 
-const NATION_TEAMS = TEAMS.filter((t) => t.confederation !== ('SPECIAL' as any));
 
 function ProgressRing({ percentage }: { percentage: number }) {
   const r = 54, c = 2 * Math.PI * r;

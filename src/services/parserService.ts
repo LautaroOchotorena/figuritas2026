@@ -4,7 +4,7 @@
 
 import type { ParseResult } from '../types';
 import { ALIAS_TO_CODE, TEAM_BY_CODE, TEAMS } from '../data/teams';
-import { SPANISH_NUMBER_MAP, ENGLISH_NUMBER_MAP, NATO_ALPHABET, SPECIAL_SECTIONS } from '../utils/constants';
+import { SPANISH_NUMBER_MAP, ENGLISH_NUMBER_MAP, NATO_ALPHABET } from '../utils/constants';
 import { fuzzyMatch, normalizeText, removeAccents } from '../utils/fuzzyMatch';
 import { getStickerNumbers } from '../store/albumStore';
 

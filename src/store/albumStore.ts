@@ -5,8 +5,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Sticker, StickerStatus, ExportData } from '../types';
-import { TEAMS, TEAM_BY_CODE } from '../data/teams';
-import { STICKERS_PER_TEAM, STORAGE_KEY, DATA_VERSION, TOTAL_STICKERS, SPECIAL_SECTIONS, STICKER_MIN } from '../utils/constants';
+import { TEAMS } from '../data/teams';
+import { STICKERS_PER_TEAM, STORAGE_KEY, DATA_VERSION, SPECIAL_SECTIONS, STICKER_MIN } from '../utils/constants';
 import { makeStickerID } from '../services/parserService';
 
 // ============================================================================
@@ -57,6 +57,7 @@ interface AlbumStore {
   resetAlbum: () => void;
   completeAlbum: () => void;
   importData: (data: ExportData) => number;
+  isTeamComplete: (teamCode: string) => boolean;
 }
 
 // ============================================================================
@@ -157,6 +158,15 @@ export const useAlbumStore = create<AlbumStore>()(
           });
         });
         set({ stickers, lastUpdated: new Date().toISOString() });
+      },
+
+      isTeamComplete: (teamCode: string): boolean => {
+        const stickers = get().stickers;
+        const numbers = getStickerNumbers(teamCode);
+        return numbers.every((n) => {
+          const id = makeStickerID(teamCode, n);
+          return stickers[id] && stickers[id].count > 0;
+        });
       },
 
       importData: (data: ExportData): number => {
