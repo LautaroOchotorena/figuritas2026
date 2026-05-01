@@ -15,6 +15,8 @@ export function useVoiceRecognition() {
   const [transcript, setTranscript] = useState('');
   const [interimTranscript, setInterimTranscript] = useState('');
   const recognitionRef = useRef<any>(null);
+  const timeoutRef = useRef<number | null>(null);
+  const accumulatedText = useRef('');
   const isSupported = isVoiceSupported();
 
   const addSticker = useAlbumStore((s) => s.addSticker);
@@ -97,12 +99,32 @@ export function useVoiceRecognition() {
 
     const recognition = createVoiceRecognition({
       onResult: (text, _confidence, isFinal) => {
+        if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+
         if (isFinal) {
-          setTranscript(text);
+          accumulatedText.current = (accumulatedText.current + ' ' + text).trim();
+          setTranscript(accumulatedText.current);
           setInterimTranscript('');
-          processTranscript(text);
+
+          timeoutRef.current = window.setTimeout(() => {
+            if (accumulatedText.current) {
+              processTranscript(accumulatedText.current);
+              accumulatedText.current = '';
+              setTranscript('');
+            }
+          }, 1500);
         } else {
           setInterimTranscript(text);
+          
+          timeoutRef.current = window.setTimeout(() => {
+            const fullText = (accumulatedText.current + ' ' + text).trim();
+            if (fullText) {
+              processTranscript(fullText);
+              accumulatedText.current = '';
+              setTranscript('');
+              setInterimTranscript('');
+            }
+          }, 2000);
         }
       },
       onError: (error) => {
@@ -116,6 +138,7 @@ export function useVoiceRecognition() {
         setIsListening(true);
         setTranscript('');
         setInterimTranscript('');
+        accumulatedText.current = '';
       },
     });
 
@@ -130,8 +153,23 @@ export function useVoiceRecognition() {
       recognitionRef.current.stop();
       recognitionRef.current = null;
     }
+    
+    if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+    
+    // Use the functional state update pattern to get the latest interimTranscript just in case,
+    // but we can rely on the accumulated text mostly.
+    setInterimTranscript((currentInterim) => {
+      const fullText = (accumulatedText.current + ' ' + currentInterim).trim();
+      if (fullText) {
+        processTranscript(fullText);
+      }
+      accumulatedText.current = '';
+      setTranscript('');
+      return '';
+    });
+    
     setIsListening(false);
-  }, []);
+  }, [processTranscript]);
 
   const toggleListening = useCallback(() => {
     if (isListening) {
@@ -144,9 +182,8 @@ export function useVoiceRecognition() {
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.abort();
-      }
+      if (recognitionRef.current) recognitionRef.current.abort();
+      if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
     };
   }, []);
 
