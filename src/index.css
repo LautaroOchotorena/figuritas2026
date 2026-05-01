@@ -296,7 +296,6 @@ body { font-family: var(--font-body); background: var(--bg-primary); color: var(
   .modal { margin:10px; max-height:90vh; }
   .voice-fab { bottom:16px; right:16px; width:52px; height:52px; font-size:1.3rem; }
   .voice-transcript { bottom:80px; right:16px; }
-  .toast-container { left:12px; right:12px; max-width:none; }
   .manual-input-bar { flex-direction:column; }
   .filter-bar { gap:6px; }
 }
