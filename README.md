@@ -2,12 +2,16 @@
 
 Esta es una aplicación interactiva en React + TypeScript + Vite que simula un álbum digital para el Mundial 2026.
 
-## 🚀 Cómo correr el proyecto localmente
+## Cómo correr el proyecto localmente
 
 Si quieres descargar y ejecutar este proyecto en tu propia computadora:
 
 1. **Asegúrate de tener instalado [Node.js](https://nodejs.org/)** (esto instalará también `npm`).
-2. Abre una terminal y navega hasta la carpeta del proyecto.
+2. Clona el repositorio de GitHub.
+   ```bash
+   git clone https://github.com/LautaroOchotorena/figuritas2026
+   cd figuritas2026
+   ```
 3. Instala las dependencias:
    ```bash
    npm install
@@ -17,3 +21,6 @@ Si quieres descargar y ejecutar este proyecto en tu propia computadora:
    npm run dev
    ```
 5. Abre la URL que aparece en la terminal (usualmente `http://localhost:5173`) en tu navegador para ver la aplicación en funcionamiento. Cualquier cambio que hagas en el código se reflejará instantáneamente en el navegador.
+
+---
+*Nota: Esta aplicación fue creada y desarrollada con Inteligencia Artificial.*
