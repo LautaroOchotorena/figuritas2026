@@ -61,8 +61,26 @@ export default function AlbumView() {
       const q = normalizeText(searchQuery);
       sp = sp.filter((t) => normalizeText(t.name).includes(q) || t.code.includes(q) || t.aliases.some((a) => normalizeText(a).includes(q)));
     }
+
+    if (filter === 'complete') {
+      sp = sp.filter((t) => {
+        const nums = getStickerNumbers(t.code);
+        return nums.every((n) => (stickers[`${t.code}-${n}`]?.count ?? 0) > 0);
+      });
+    } else if (filter === 'incomplete') {
+      sp = sp.filter((t) => {
+        const nums = getStickerNumbers(t.code);
+        return !nums.every((n) => (stickers[`${t.code}-${n}`]?.count ?? 0) > 0);
+      });
+    } else if (filter === 'missing') {
+      sp = sp.filter((t) => {
+        const nums = getStickerNumbers(t.code);
+        return nums.every((n) => (stickers[`${t.code}-${n}`]?.count ?? 0) === 0);
+      });
+    }
+
     return sp;
-  }, [showSpecials, confFilter, searchQuery]);
+  }, [showSpecials, confFilter, searchQuery, filter, stickers]);
 
   const grouped = useMemo(() => {
     const g: Record<string, Team[]> = {};
