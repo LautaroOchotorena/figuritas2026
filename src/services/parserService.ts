@@ -149,7 +149,7 @@ function parseSingleInput(input: string): ParseResult {
   const parts = processed.split(/\s+/);
 
   if (parts.length < 2) {
-    return { success: false, teamCode: '', teamName: '', number: -1, stickerId: '', originalInput: original, error: 'Formato: <selección> <número>. Ej: "arg 1" o "fwc 00"' };
+    return { success: false, teamCode: '', teamName: '', number: -1, stickerId: '', originalInput: original, error: 'Formato: <selección> <número>. Ej: "argentina 1" o "brasil 20"' };
   }
 
   // Try: last part = number, rest = team
@@ -162,8 +162,10 @@ function parseSingleInput(input: string): ParseResult {
     if (team) {
       if (!isValidNumber(team.code, number)) {
         const nums = getStickerNumbers(team.code);
-        return { success: false, teamCode: team.code, teamName: team.name, number, stickerId: '', originalInput: original,
-          error: `Número ${number} no existe para ${team.name}. Rango: ${nums[0]}-${nums[nums.length - 1]}` };
+        return {
+          success: false, teamCode: team.code, teamName: team.name, number, stickerId: '', originalInput: original,
+          error: `Número ${number} no existe para ${team.name}. Rango: ${nums[0]}-${nums[nums.length - 1]}`
+        };
       }
       return { success: true, teamCode: team.code, teamName: team.name, number, stickerId: `${team.code}-${number}`, originalInput: original };
     }
