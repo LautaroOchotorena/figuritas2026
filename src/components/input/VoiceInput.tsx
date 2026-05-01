@@ -25,7 +25,7 @@ export default function VoiceInput() {
           <div className="voice-transcript-label">
             {isListening ? '🔴 Escuchando...' : 'Último resultado'}
           </div>
-          <div>{interimTranscript || transcript || 'Decí el código de figurita...'}</div>
+          <div>{interimTranscript || transcript || 'Decí país y número...'}</div>
         </div>
       )}
     </>
