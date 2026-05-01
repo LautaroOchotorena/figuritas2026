@@ -102,7 +102,16 @@ export function useVoiceRecognition() {
         if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
 
         if (isFinal) {
-          accumulatedText.current = (accumulatedText.current + ' ' + text).trim();
+          // Avoid text duplication if the browser sends cumulative final chunks
+          const currAcc = accumulatedText.current.toLowerCase();
+          const newText = text.toLowerCase().trim();
+          
+          if (currAcc && newText.startsWith(currAcc)) {
+            accumulatedText.current = text.trim();
+          } else {
+            accumulatedText.current = (accumulatedText.current + ' ' + text).trim();
+          }
+
           setTranscript(accumulatedText.current);
           setInterimTranscript('');
 
@@ -114,10 +123,25 @@ export function useVoiceRecognition() {
             }
           }, 1500);
         } else {
-          setInterimTranscript(text);
+          // For interim, we also avoid duplication
+          const currAcc = accumulatedText.current.toLowerCase();
+          const newText = text.toLowerCase().trim();
+          
+          let displayInterim = text;
+          if (currAcc && newText.startsWith(currAcc)) {
+             displayInterim = text.substring(currAcc.length).trim();
+          }
+          
+          setInterimTranscript(displayInterim);
           
           timeoutRef.current = window.setTimeout(() => {
-            const fullText = (accumulatedText.current + ' ' + text).trim();
+            let fullText = '';
+            if (currAcc && newText.startsWith(currAcc)) {
+               fullText = text.trim();
+            } else {
+               fullText = (accumulatedText.current + ' ' + text).trim();
+            }
+            
             if (fullText) {
               processTranscript(fullText);
               accumulatedText.current = '';
