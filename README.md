@@ -1,6 +1,8 @@
 # Álbum del Mundial 2026 (Figuritas App)
 
-Esta es una aplicación interactiva en React + TypeScript + Vite que simula un álbum digital para el Mundial 2026.
+Esta es una aplicación web interactiva desarrollada con React, TypeScript y Vite que simula un álbum digital del Mundial 2026. Permite agregar nuevas figuritas, identificar las repetidas y agilizar su organización y pegado.
+
+[Web app](https://lautaroochotorena.github.io/figuritas2026/)
 
 ## Cómo correr el proyecto localmente
 
