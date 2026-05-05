@@ -185,6 +185,23 @@ export const useAlbumStore = create<AlbumStore>()(
     {
       name: STORAGE_KEY,
       version: DATA_VERSION,
+      merge: (persistedState: any, currentState: any) => {
+        const mergedStickers = { ...currentState.stickers };
+        if (persistedState && persistedState.stickers) {
+          Object.keys(persistedState.stickers).forEach((id) => {
+            // Keep the pre-initialized object layout (including new keys like 'cc'),
+            // but override with the valid persisted state
+            if (mergedStickers[id]) {
+              mergedStickers[id] = persistedState.stickers[id];
+            }
+          });
+        }
+        return {
+          ...currentState,
+          ...persistedState,
+          stickers: mergedStickers,
+        };
+      },
       migrate: (persistedState: any, version: number) => {
         // Migration from v1 (old 0-11 numbering) — just reset
         if (version < DATA_VERSION) {
