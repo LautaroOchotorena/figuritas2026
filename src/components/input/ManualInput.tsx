@@ -17,6 +17,7 @@ export default function ManualInput() {
     if (!value.trim()) return;
 
     const results = parseInput(value);
+    const uiState = useUIStore.getState();
     results.forEach((r) => {
       if (!r.success) {
         playError();
@@ -25,6 +26,11 @@ export default function ManualInput() {
       }
       const outcome = addSticker(r.teamCode, r.number);
       const team = TEAM_BY_CODE[r.teamCode];
+
+      if (uiState.isPasteModeActive && team && outcome === 'new') {
+        uiState.addPasteSticker({ teamCode: r.teamCode, group: team.group, number: r.number });
+      }
+
       if (outcome === 'new') {
         playSuccess();
         vibrate(50);

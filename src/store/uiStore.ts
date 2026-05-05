@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { create } from 'zustand';
-import type { Toast, Theme, FilterType, ConfederationFilter } from '../types';
+import type { Toast, Theme, FilterType, ConfederationFilter, PasteSticker } from '../types';
 import { loadTheme, saveTheme } from '../services/storageService';
 import { TOAST_DURATION } from '../utils/constants';
 
@@ -30,6 +30,15 @@ interface UIStore {
   setShowSettings: (show: boolean) => void;
   showHelp: boolean;
   setShowHelp: (show: boolean) => void;
+  
+  // Paste Mode
+  isPasteModeActive: boolean;
+  setPasteModeActive: (active: boolean) => void;
+  accumulatedPasteStickers: PasteSticker[];
+  addPasteSticker: (sticker: PasteSticker) => void;
+  clearPasteStickers: () => void;
+  showPasteOrderModal: boolean;
+  setShowPasteOrderModal: (show: boolean) => void;
 
   // Sidebar
   isSidebarOpen: boolean;
@@ -86,7 +95,16 @@ export const useUIStore = create<UIStore>((set, get) => ({
   isSidebarOpen: false,
   setSidebarOpen: (open: boolean) => set({ isSidebarOpen: open }),
   toggleSidebar: () => set((s) => ({ isSidebarOpen: !s.isSidebarOpen })),
-
+  // ── Paste Mode ─────────────────────────────────────────
+  isPasteModeActive: false,
+  setPasteModeActive: (active) => set({ isPasteModeActive: active }),
+  accumulatedPasteStickers: [],
+  addPasteSticker: (sticker) => set((state) => ({
+    accumulatedPasteStickers: [...state.accumulatedPasteStickers, sticker]
+  })),
+  clearPasteStickers: () => set({ accumulatedPasteStickers: [] }),
+  showPasteOrderModal: false,
+  setShowPasteOrderModal: (show) => set({ showPasteOrderModal: show }),
   // ── Toasts ─────────────────────────────────────────────
   toasts: [],
 

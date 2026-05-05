@@ -178,6 +178,7 @@ body { font-family: var(--font-body); background: var(--bg-primary); color: var(
 /* ── Team Detail Modal ──────────────────── */
 .modal-overlay { position:fixed; inset:0; background:var(--bg-overlay); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeIn 0.2s ease; }
 .modal { background:var(--bg-secondary); border-radius:var(--radius-xl); max-width:560px; width:100%; max-height:85vh; overflow-y:auto; animation:popIn 0.3s ease; box-shadow:var(--shadow-xl); }
+.paste-order-panel { max-width:720px; width:min(720px, calc(100% - 40px)); background:var(--bg-secondary); border:1px solid var(--border); }
 .modal-header { display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid var(--border); }
 .modal-title { font-family:var(--font-heading); font-size:1.3rem; font-weight:700; display:flex; align-items:center; gap:10px; }
 .modal-close { width:36px; height:36px; border-radius:var(--radius-full); border:none; background:var(--bg-input); color:var(--text-secondary); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.2rem; transition:all 0.2s; -webkit-tap-highlight-color:transparent; }
@@ -262,6 +263,61 @@ body { font-family: var(--font-body); background: var(--bg-primary); color: var(
 .bulk-status.valid { background:var(--success); }
 .bulk-status.invalid { background:var(--error); }
 .bulk-status.dupe { background:var(--warning); }
+
+/* ── Paste Order Modal ──────────────────── */
+.paste-order-panel {
+  max-width: 450px !important;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.paste-order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.paste-order-item {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  gap: 12px;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.paste-order-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent);
+}
+.paste-order-badge {
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+.paste-order-details {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+}
+.sticker-name {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+.sticker-number {
+  background: var(--info);
+  color: white;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  min-width: 40px;
+  text-align: center;
+}
 
 /* ── Settings / Export ──────────────────── */
 .settings-modal { max-width:600px; }

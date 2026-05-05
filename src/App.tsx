@@ -5,6 +5,7 @@ import Sidebar from './components/layout/Sidebar';
 import AlbumView from './components/album/AlbumView';
 import TeamDetail from './components/album/TeamDetail';
 import ManualInput from './components/input/ManualInput';
+import PasteModeBar from './components/input/PasteModeBar';
 import VoiceInput from './components/input/VoiceInput';
 import BulkInput from './components/input/BulkInput';
 import ToastContainer from './components/ui/Toast';
@@ -24,6 +25,7 @@ export default function App() {
       <div className="app-layout">
         <main className="main-content">
           <ManualInput />
+          <PasteModeBar />
           <AlbumView />
         </main>
         <Sidebar />

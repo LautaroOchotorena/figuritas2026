@@ -92,6 +92,12 @@ export interface ParseResult {
   error?: string;
 }
 
+export interface PasteSticker {
+  teamCode: string;
+  group: string;
+  number: number;
+}
+
 /** Resultado del reconocimiento de voz */
 export interface VoiceResult {
   /** Texto reconocido */
