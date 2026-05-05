@@ -39,17 +39,34 @@ export function createVoiceRecognition(
   recognition.lang = lang;
   recognition.continuous = true;
   recognition.interimResults = true;
-  recognition.maxAlternatives = 3;
+  recognition.maxAlternatives = 5;
+
+  const pickBestAlternative = (result: any): { transcript: string; confidence: number } => {
+    const alternatives = Array.from(result || []).map((alternative: any) => ({
+      transcript: String(alternative?.transcript ?? '').trim(),
+      confidence: Number(alternative?.confidence ?? 0),
+    }));
+
+    if (alternatives.length === 0) {
+      return { transcript: '', confidence: 0 };
+    }
+
+    alternatives.sort((left, right) => right.confidence - left.confidence);
+    return alternatives[0];
+  };
 
   // Event handlers
   recognition.onresult = (event: any) => {
-    const last = event.results.length - 1;
-    const result = event.results[last];
-    const transcript = result[0].transcript;
-    const confidence = result[0].confidence;
-    const isFinal = result.isFinal;
+    const startIndex = typeof event.resultIndex === 'number' ? event.resultIndex : 0;
 
-    callbacks.onResult(transcript, confidence, isFinal);
+    for (let index = startIndex; index < event.results.length; index++) {
+      const result = event.results[index];
+      const bestAlternative = pickBestAlternative(result);
+
+      if (!bestAlternative.transcript) continue;
+
+      callbacks.onResult(bestAlternative.transcript, bestAlternative.confidence, result.isFinal);
+    }
   };
 
   recognition.onerror = (event: any) => {
