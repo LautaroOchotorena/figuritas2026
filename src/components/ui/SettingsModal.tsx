@@ -103,6 +103,13 @@ export default function SettingsModal() {
                 Ejemplo: <code>argentina 1</code>, <code>brasil 5</code>, <code>coca cola 12</code>.
               </p>
 
+              <h3 style={{ marginBottom: 8, color: 'var(--accent)' }}>Modo Pegado 📋</h3>
+              <p style={{ marginBottom: 16 }}>
+                Activá el <strong>Indice de Pegado</strong> usando el botón de la barra inferior.<br />
+                Mientras el modo esté activo, las nuevas figuritas que vayas agregando (ya sea manual o por voz) se acumularán en un panel.<br />
+                Al hacer clic en "Ver Orden de Pegado", verás el listado exacto de las figuritas que conseguiste ordenado tal como aparecen en el álbum, ¡ideal para pegarlas mucho más rápido! Sólo las figuritas "nuevas" (no repetidas) aparecerán en este reporte.
+              </p>
+
               <h3 style={{ marginBottom: 8, color: 'var(--accent)' }}>Interacción con Figuritas</h3>
               <ul style={{ marginBottom: 16, paddingLeft: 20 }}>
                 <li style={{ marginBottom: 4 }}><strong>Click izquierdo:</strong> Marca la figurita como obtenida (✓). Si hacés click de nuevo la desmarca.</li>
